@@ -3,28 +3,26 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.example.myapplication.databinding.ActivityMain2Binding;
-import com.example.myapplication.databinding.ActivityMainBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.Locale;
 
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     ActivityMain2Binding binding;
-    Calendar calendar;
-    DatePickerDialog datePickerDialog;
-    String[] opcoes = {"Click para selecionar o horario","Uma vez por dia", "12 horas", "8 horas","6 horas","4 horas","2 minutos(opção para testes)"};
+    String horario = "";
+    int frequancia, horaAtual, minutoAtal;
 
 
     @Override
@@ -36,7 +34,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         opcoesBotaoFrequencia();
         dataAlarme();
-
+        horaAlarme();
     }
 
     public void trocaTela2Para1(View view){
@@ -45,13 +43,43 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     public void opcoesBotaoFrequencia(){
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity2.this, android.R.layout.simple_spinner_dropdown_item,opcoes);
+        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this,R.array.opcoes, android.R.layout.simple_spinner_item);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.frequenciaMedicamento.setAdapter(arrayAdapter);
+        binding.frequenciaMedicamento.setOnItemSelectedListener(this);
+
+    }
+
+    public void horaAlarme(){
+        Calendar calendar = Calendar.getInstance();
+        int hora = calendar.get(Calendar.HOUR_OF_DAY);
+        int minuto = calendar.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity2.this,
+                new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minuteOfDay) {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                c.set(Calendar.MINUTE,minuteOfDay);
+                binding.horaRemedio.setText(String.format(Locale.getDefault(),"%02d:%02d",hourOfDay,minuteOfDay));
+                horaAtual = hourOfDay;
+                minutoAtal = minuteOfDay;
+                horario = binding.horaRemedio.getText().toString();
+                mostrandoHorarios();
+            }
+        },hora,minuto,true
+        );
+        binding.horaRemedio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timePickerDialog.show();
+            }
+        });
     }
 
     public void dataAlarme(){
-        calendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 Calendar dataSelecionada = Calendar.getInstance();
@@ -67,5 +95,104 @@ public class MainActivity2 extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+    }
+
+    public void mostrandoHorarios(){
+        int somaHora = horaAtual;
+        int horaRezetada = horaAtual;
+        if(frequancia == 0 && horario.equals("")){
+
+        }else{
+            if(frequancia == 1){
+                somaHora = horaRezetada;
+                binding.horario1.setText(somaHora +":"+ minutoAtal);
+                binding.horario2.setText("-");
+                binding.horario3.setText("-");
+                binding.horario4.setText("-");
+                binding.horario5.setText("-");
+                binding.horario6.setText("-");
+
+            }else if(frequancia ==2){
+                somaHora = horaRezetada;
+                binding.horario1.setText(somaHora +":"+ minutoAtal);
+                somaHora = somaHora +12;
+                binding.horario2.setText(validarHorario(somaHora) +":"+ minutoAtal);
+                binding.horario3.setText("-");
+                binding.horario4.setText("-");
+                binding.horario5.setText("-");
+                binding.horario6.setText("-");
+
+            }else if(frequancia ==3){
+                somaHora = horaRezetada;
+                binding.horario1.setText(somaHora +":"+ minutoAtal);
+                somaHora = somaHora +8;
+                binding.horario2.setText(validarHorario(somaHora) +":"+ minutoAtal);
+                somaHora = somaHora +8;
+                binding.horario3.setText(validarHorario(somaHora) +":"+ minutoAtal);
+                binding.horario4.setText("-");
+                binding.horario5.setText("-");
+                binding.horario6.setText("-");
+
+            }else if(frequancia ==4){
+                somaHora = horaRezetada;
+                binding.horario1.setText(somaHora +":"+ minutoAtal);
+                somaHora = somaHora +6;
+                binding.horario2.setText(validarHorario(somaHora) +":"+ minutoAtal);
+                somaHora = somaHora +6;
+                binding.horario3.setText(validarHorario(somaHora) +":"+ minutoAtal);
+                somaHora = somaHora +6;
+                binding.horario4.setText(validarHorario(somaHora) +":"+ minutoAtal);
+                binding.horario5.setText("-");
+                binding.horario6.setText("-");
+
+            }else if(frequancia ==5){
+                somaHora = horaRezetada;
+                binding.horario1.setText(somaHora +":"+ minutoAtal);
+                somaHora = somaHora +4;
+                binding.horario2.setText(validarHorario(somaHora) +":"+ minutoAtal);
+                somaHora = somaHora +4;
+                binding.horario3.setText(validarHorario(somaHora) +":"+ minutoAtal);
+                somaHora = somaHora +4;
+                binding.horario4.setText(validarHorario(somaHora) +":"+ minutoAtal);
+                somaHora = somaHora +4;
+                binding.horario5.setText(validarHorario(somaHora) +":"+ minutoAtal);
+                somaHora = somaHora +4;
+                binding.horario6.setText(validarHorario(somaHora) +":"+ minutoAtal);
+
+            }else if(frequancia ==6){
+                somaHora = horaRezetada;
+                binding.horario1.setText(somaHora +":"+ minutoAtal);
+                minutoAtal = minutoAtal +1;
+                binding.horario2.setText(somaHora +":"+ minutoAtal);
+                minutoAtal = minutoAtal +1;
+                binding.horario3.setText(somaHora +":"+ minutoAtal);
+                binding.horario4.setText("-");
+                binding.horario5.setText("-");
+                binding.horario6.setText("-");
+
+            }
+        }
+
+    }
+
+    public int validarHorario(int hora){
+        if(hora >=24){
+            hora = hora-24;
+        }
+        return hora;
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        //String text = adapterView.getItemAtPosition(i).toString();
+        frequancia = i;
+        mostrandoHorarios();
+        //Toast.makeText(getApplicationContext(),text+" "+frequancia,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

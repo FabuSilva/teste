@@ -3,13 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.164" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_baseline_delete_botao.xml" value="0.164" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_iconbt.xml" value="0.164" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.164" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/selector_bt.xml" value="0.164" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/shape_button.xml" value="0.164" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/shape_button_cancelar.xml" value="0.164" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/shape_spinner.xml" value="0.164" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/shape_textview.xml" value="0.164" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/style.xml" value="0.164" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main2.xml" value="0.33" />
+        <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main2.xml" value="0.25" />
         <entry key="..\:/Users/LENOVO/AndroidStudioProjects/MyApplication/app/src/main/res/layout/layout_recycler_view.xml" value="0.42830540037243947" />
       </map>
     </option>
