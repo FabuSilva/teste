@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/background_color"
-    tools:context=".MainActivity2">
+    android:orientation="vertical"
+    tools:context=".fragment.FragmentCadastroRemedio">
 
     <TextView
         android:id="@+id/textView"
@@ -229,7 +228,6 @@
             android:layout_marginRight="24dp"
             android:layout_weight="1"
             android:background="@drawable/shape_button_cancelar"
-            android:onClick="trocaTela2Para1"
             android:text="Cancelar"
             android:textColor="@color/white"
             android:textSize="16dp" />
@@ -243,9 +241,9 @@
             android:layout_marginRight="32dp"
             android:layout_weight="1"
             android:background="@drawable/shape_button_salvar"
-            android:onClick="trocaTela2Para1"
             android:text="Salvar"
             android:textColor="@color/white"
             android:textSize="16dp" />
     </LinearLayout>
+
 </LinearLayout>

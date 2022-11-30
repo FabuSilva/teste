@@ -1,73 +1,91 @@
-package com.example.myapplication;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.myapplication.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import com.example.myapplication.databinding.ActivityMain2Binding;
+import com.example.myapplication.R;
+import com.example.myapplication.databinding.FragmentCadastroRemedioBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class MainActivity2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    ActivityMain2Binding binding;
+public class FragmentCadastroRemedio extends Fragment {
+
+    FragmentCadastroRemedioBinding binding;
     String horario = "";
     int frequancia, horaAtual, minutoAtal;
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentCadastroRemedioBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-        binding = ActivityMain2Binding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        opcoesBotaoFrequencia();
-        dataAlarme();
+        voltarParaHome();
         horaAlarme();
+        dataAlarme();
+        opcoesBotaoFrequencia();
     }
 
-    public void trocaTela2Para1(View view){
-        Intent intent = new Intent(MainActivity2.this,MainActivity.class);
-        startActivity(intent);
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 
-    public void opcoesBotaoFrequencia(){
-        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(this,R.array.opcoes, android.R.layout.simple_spinner_item);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.frequenciaMedicamento.setAdapter(arrayAdapter);
-        binding.frequenciaMedicamento.setOnItemSelectedListener(this);
-
+    public void voltarParaHome(){
+        binding.btCancela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setReorderingAllowed(true);
+                fragmentTransaction.replace(R.id.frameLayout,new FragmentListaAlarmes());
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     public void horaAlarme(){
         Calendar calendar = Calendar.getInstance();
         int hora = calendar.get(Calendar.HOUR_OF_DAY);
         int minuto = calendar.get(Calendar.MINUTE);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(MainActivity2.this,
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                 new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minuteOfDay) {
-                Calendar c = Calendar.getInstance();
-                c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                c.set(Calendar.MINUTE,minuteOfDay);
-                binding.horaRemedio.setText(String.format(Locale.getDefault(),"%02d:%02d",hourOfDay,minuteOfDay));
-                horaAtual = hourOfDay;
-                minutoAtal = minuteOfDay;
-                horario = binding.horaRemedio.getText().toString();
-                mostrandoHorarios();
-            }
-        },hora,minuto,true
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int hourOfDay, int minuteOfDay) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                        c.set(Calendar.MINUTE,minuteOfDay);
+                        binding.horaRemedio.setText(String.format(Locale.getDefault(),"%02d:%02d",hourOfDay,minuteOfDay));
+                        horaAtual = hourOfDay;
+                        minutoAtal = minuteOfDay;
+                        horario = binding.horaRemedio.getText().toString();
+                        mostrandoHorarios();
+                    }
+                },hora,minuto,true
         );
         binding.horaRemedio.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +97,7 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
 
     public void dataAlarme(){
         Calendar calendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 Calendar dataSelecionada = Calendar.getInstance();
@@ -182,17 +200,26 @@ public class MainActivity2 extends AppCompatActivity implements AdapterView.OnIt
         return hora;
     }
 
+    public void opcoesBotaoFrequencia(){
+        ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getActivity(),R.array.opcoes, android.R.layout.simple_spinner_item);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.frequenciaMedicamento.setAdapter(arrayAdapter);
+        binding.frequenciaMedicamento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                //String text = adapterView.getItemAtPosition(i).toString();
+                frequancia = i;
+                mostrandoHorarios();
+                //Toast.makeText(getApplicationContext(),text+" "+frequancia,Toast.LENGTH_LONG).show();
+            }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        //String text = adapterView.getItemAtPosition(i).toString();
-        frequancia = i;
-        mostrandoHorarios();
-        //Toast.makeText(getApplicationContext(),text+" "+frequancia,Toast.LENGTH_LONG).show();
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
 
-    }
 }
