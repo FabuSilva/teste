@@ -17,7 +17,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
+import com.example.myapplication.DAO.ControllerAlarme;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentCadastroRemedioBinding;
 import com.example.myapplication.model.Alarme;
@@ -45,7 +47,8 @@ public class FragmentCadastroRemedio extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        voltarParaHome();
+        btCancelar();
+        btSalvar();
         horaAlarme();
         dataAlarme();
         opcoesBotaoFrequencia();
@@ -57,20 +60,24 @@ public class FragmentCadastroRemedio extends Fragment {
         binding = null;
     }
 
-    public void voltarParaHome(){
+    public void voltarParaHome() {
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setReorderingAllowed(true);
+        fragmentTransaction.replace(R.id.frameLayout, new FragmentListaAlarmes());
+        fragmentTransaction.commit();
+    }
+
+    public void btCancelar() {
         binding.btCancela.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setReorderingAllowed(true);
-                fragmentTransaction.replace(R.id.frameLayout,new FragmentListaAlarmes());
-                fragmentTransaction.commit();
+                voltarParaHome();
             }
         });
     }
 
-    public void horaAlarme(){
+    public void horaAlarme() {
         Calendar calendar = Calendar.getInstance();
         int hora = calendar.get(Calendar.HOUR_OF_DAY);
         int minuto = calendar.get(Calendar.MINUTE);
@@ -220,6 +227,30 @@ public class FragmentCadastroRemedio extends Fragment {
 
             }
         });
+
+    }
+
+    public void btSalvar() {
+        binding.btSalva.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pegarDados();
+                voltarParaHome();
+            }
+        });
+    }
+
+    public void pegarDados() {
+        Alarme alarme = new Alarme();
+        ControllerAlarme crud = new ControllerAlarme(getActivity());
+        alarme.setNomeMedicamento(binding.nomeMedicamento.getText().toString());
+        alarme.setDataFinal(binding.dataFinal.getText().toString());
+        alarme.setHorarioSelecionado(binding.horaRemedio.getText().toString());
+        alarme.setFrequancia(frequancia);
+//        String resultado;
+//        resultado = crud.salvar(alarme);
+//        Toast.makeText(getActivity(),resultado,Toast.LENGTH_SHORT).show();
+        crud.salvar(alarme);
 
     }
 

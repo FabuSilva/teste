@@ -1,46 +1,75 @@
 package com.example.myapplication.DAO;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
+import com.example.myapplication.model.Alarme;
 
-public class ControllerAlarme extends SQLiteOpenHelper {
+import java.util.ArrayList;
+import java.util.List;
 
-    private static final String DATABASE_NOME = "MeusMedicamentos";
-    private static final int DATABASE_VERSAO = 1;
-    private static final String TABELA = "Alarmes";
-    private static final String ID_TABELA = "id";
-    private static final String MEDICAMENTO_TABELA = "nomeMedicamento";
-    private static final String DATA_TABELA = "dataFinal";
-    private static final String HORA_TABELA = "horarioSelecionado";
-    private static final String FREQUENCIA_TABELA = "frequancia";
-    private static SQLiteDatabase instance;
+public class ControllerAlarme {
 
-    public static SQLiteDatabase getInstance() {
-        return instance;
-    }
+    private SQLiteDatabase db;
+    private BancoAlarme banco;
 
     public ControllerAlarme(Context context) {
-        super(context, DATABASE_NOME, null, DATABASE_VERSAO);
+        banco = new BancoAlarme(context);
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        String info = "CREATE TABLE IF NOT EXISTS " + TABELA + " ( "
-                + ID_TABELA + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + MEDICAMENTO_TABELA + " VARCHAR, "
-                + HORA_TABELA + " VARCHAR, "
-                + FREQUENCIA_TABELA + " INTEGER,"
-                + DATA_TABELA + " VARCHAR )";
-        db.execSQL(info);
-        db.close();
+    public String salvar(Alarme a) {
+        try {
+            long resultado;
+            ContentValues valores = new ContentValues();
+            db = banco.getWritableDatabase();
+            valores.put(BancoAlarme.getNomeMed(), a.getNomeMedicamento());
+            valores.put(BancoAlarme.getHora(), a.getHorarioSelecionado());
+            valores.put(BancoAlarme.getData(), a.getDataFinal());
+            valores.put(BancoAlarme.getFrequencia(), a.getFrequancia());
+
+            resultado = db.insert(BancoAlarme.getTabela(), null, valores);
+            db.close();
+            if (resultado == -1) {
+                return "ERRO ao cadastrar alarme";
+            } else {
+                return "Alarme salvo com sucesso";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void alterar(Alarme a) {
 
     }
+
+    public void deletar(int id) {
+
+    }
+
+    public Cursor listarDados() {
+        try {
+            Cursor cursor;
+            String[] campos = {BancoAlarme.getID(), BancoAlarme.getNomeMed(), BancoAlarme.getData(), BancoAlarme.getFrequencia()};
+            db = banco.getReadableDatabase();
+            cursor = db.query(BancoAlarme.getTabela(), campos, null, null, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+            }
+            db.close();
+            return cursor;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+    }
+
+
 }
