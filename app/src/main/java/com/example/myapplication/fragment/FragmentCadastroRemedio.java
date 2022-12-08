@@ -20,6 +20,7 @@ import android.widget.TimePicker;
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentCadastroRemedioBinding;
+import com.example.myapplication.model.Alarme;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,6 +29,7 @@ import java.util.Locale;
 
 public class FragmentCadastroRemedio extends Fragment {
 
+    Alarme alarme;
     FragmentCadastroRemedioBinding binding;
     String horario = "";
     int frequancia, horaAtual, minutoAtal;

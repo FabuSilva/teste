@@ -36,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
         Alarme alarme = itens.get(position);
         holder.nomeMedicamento.setText(alarme.getNomeMedicamento());
         holder.dataFinal.setText(alarme.getDataFinal());
-        holder.horarios.setText(alarme.getHorarios());
+        holder.horarios.setText(alarme.getHorarioSelecionado());
 
     }
 

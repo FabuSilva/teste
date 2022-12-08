@@ -41,15 +41,15 @@ public class FragmentListaAlarmes extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         chamarTelaCadastro();
-        recyclerView = binding.recycle;
-        lista = new ArrayList<Alarme>();
-        lista.add(new Alarme("Dipirona","14/11/2022","10 20 01"));
-        lista.add(new Alarme("Anti-Alergico","17/11/2022","10 20 01"));
-        adapter = new RecyclerViewAdapter(getActivity(),lista);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+//        recyclerView = binding.recycle;
+//        lista = new ArrayList<Alarme>();
+//        lista.add(new Alarme("Dipirona","14/11/2022","10 20 01"));
+//        lista.add(new Alarme("Anti-Alergico","17/11/2022","10 20 01"));
+//        adapter = new RecyclerViewAdapter(getActivity(),lista);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),
+//                LinearLayoutManager.VERTICAL, false);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setAdapter(adapter);
     }
 
     @Override
