@@ -1,5 +1,6 @@
 package com.example.myapplication.fragment;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.myapplication.DAO.BancoAlarme;
+import com.example.myapplication.DAO.ControllerAlarme;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentListaAlarmesBinding;
 import com.example.myapplication.model.Alarme;
@@ -26,6 +30,7 @@ public class FragmentListaAlarmes extends Fragment {
 
     FragmentListaAlarmesBinding binding;
     RecyclerView recyclerView;
+    ControllerAlarme banco;
     RecyclerViewAdapter adapter;
     ArrayList<Alarme> lista;
 
@@ -39,17 +44,31 @@ public class FragmentListaAlarmes extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Cursor cursor = banco.listarDados();
+        String[] nomesDosCampos = new String[]{BancoAlarme.getID(), BancoAlarme.getNomeMed(), BancoAlarme.getHora(), BancoAlarme.getData()};
+        int[] idViews = new int[]{R.id.idRecycleView, R.id.recycleView_nome, R.id.recycleView_data, R.id.recycleView_hora};
 
-        chamarTelaCadastro();
-        recyclerView = binding.recycle;
+        banco = new ControllerAlarme(getActivity());
         lista = new ArrayList<Alarme>();
-        lista.add(new Alarme("Dipirona","14/11/2022","10 20 01"));
-        lista.add(new Alarme("Anti-Alergico","17/11/2022","10 20 01"));
-        adapter = new RecyclerViewAdapter(getActivity(),lista);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),
-                LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        adapter = new RecyclerViewAdapter(getActivity(), lista);
+        binding.recycle.setAdapter(adapter);
+        binding.recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
+        displayData();
+        chamarTelaCadastro();
+//        recyclerView = binding.recycle;
+//        lista = new ArrayList<Alarme>();
+//        lista.add(new Alarme("Dipirona","14/11/2022","10 20 01"));
+//        lista.add(new Alarme("Anti-Alergico","17/11/2022","10 20 01"));
+//        adapter = new RecyclerViewAdapter(getActivity(),lista);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),
+//                LinearLayoutManager.VERTICAL, false);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setAdapter(adapter);
+    }
+
+    private void displayData() {
+
+
     }
 
     @Override
@@ -58,7 +77,7 @@ public class FragmentListaAlarmes extends Fragment {
         binding = null;
     }
 
-    public void chamarTelaCadastro(){
+    public void chamarTelaCadastro() {
         binding.btFlutuante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

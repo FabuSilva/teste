@@ -34,9 +34,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         Alarme alarme = itens.get(position);
+        holder.id.setText(alarme.getId());
         holder.nomeMedicamento.setText(alarme.getNomeMedicamento());
         holder.dataFinal.setText(alarme.getDataFinal());
-        holder.horarios.setText(alarme.getHorarios());
+        holder.horarios.setText(alarme.getHorarioSelecionado());
 
     }
 
