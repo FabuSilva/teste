@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="3dp"
-                android:text="Nome do remedio"
+                android:text="@string/remedio_cadastro"
                 android:textColor="@color/text_color"
                 android:textSize="15dp" />
 
@@ -42,7 +42,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
-                    android:text="Horario(s):"
+                    android:text="@string/horaio_list"
                     android:textColor="@color/text_color"
                     android:textSize="15dp" />
 
@@ -54,7 +54,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
-                    android:text="- - - - -"
+                    android:text="@string/hora_list"
                     android:textColor="@color/text_color"
                     android:textSize="15dp" />
 
@@ -66,7 +66,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginRight="4dp"
                     android:textSize="15dp"
-                    android:text="id" />
+                    android:text="@string/id_list" />
 
             </LinearLayout>
 
@@ -84,7 +84,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
-                    android:text="Lembrete progamado até:"
+                    android:text="@string/lembrete_list"
                     android:textColor="@color/text_color"
                     android:textSize="15dp" />
 
@@ -95,7 +95,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginRight="4dp"
                     android:layout_weight="1"
-                    android:text="00/00/0000"
+                    android:text="@string/data_list"
                     android:textColor="@color/text_color"
                     android:textSize="15dp" />
 

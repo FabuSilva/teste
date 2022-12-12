@@ -247,23 +247,35 @@ public class FragmentCadastroRemedio extends Fragment {
     }
 
     private void criarAlarme() {
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(getActivity(), AlarmerReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 100, intent, PendingIntent.FLAG_MUTABLE);
+        long FREQUENCIA_HORAS;
         switch (frequancia) {
             case 1:
-
+                FREQUENCIA_HORAS = 24 * 3600000;
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, horaEscolhida.getTimeInMillis(), FREQUENCIA_HORAS, pendingIntent);
                 break;
             case 2:
+                FREQUENCIA_HORAS = 12 * 3600000;
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, horaEscolhida.getTimeInMillis(), FREQUENCIA_HORAS, pendingIntent);
                 break;
             case 3:
+                FREQUENCIA_HORAS = 8 * 3600000;
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, horaEscolhida.getTimeInMillis(), FREQUENCIA_HORAS, pendingIntent);
                 break;
             case 4:
+                FREQUENCIA_HORAS = 6 * 3600000;
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, horaEscolhida.getTimeInMillis(), FREQUENCIA_HORAS, pendingIntent);
                 break;
             case 5:
+                FREQUENCIA_HORAS = 4 * 3600000;
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, horaEscolhida.getTimeInMillis(), FREQUENCIA_HORAS, pendingIntent);
                 break;
             case 6:
-                AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
-                Intent intent = new Intent(getActivity(), AlarmerReceiver.class);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 100, intent, PendingIntent.FLAG_MUTABLE);
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, horaEscolhida.getTimeInMillis(), pendingIntent);
+                FREQUENCIA_HORAS = 4 * 1000;
+                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, horaEscolhida.getTimeInMillis(), FREQUENCIA_HORAS, pendingIntent);
+                //alarmManager.setExact(AlarmManager.RTC_WAKEUP, horaEscolhida.getTimeInMillis(), pendingIntent);
                 break;
             case 0:
                 break;
