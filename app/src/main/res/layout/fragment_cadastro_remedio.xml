@@ -16,7 +16,7 @@
         android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:text="Nome do medicamento" />
+        android:text="@string/remedio_cadastro" />
 
     <EditText
         android:id="@+id/nomeMedicamento"
@@ -41,7 +41,7 @@
         android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:text="Horário do medicamento" />
+        android:text="@string/horario_cadastro" />
 
     <TextView
         android:id="@+id/horaRemedio"
@@ -64,7 +64,7 @@
         android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:text="Frequencia do medicamento" />
+        android:text="@string/frequencia_cadastro" />
 
 
     <Spinner
@@ -95,7 +95,7 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:elevation="5dp"
-            android:text="-" />
+            android:text="@string/hora_cadastro" />
 
         <TextView
             android:id="@+id/horario2"
@@ -108,7 +108,7 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:elevation="5dp"
-            android:text="-" />
+            android:text="@string/hora_cadastro" />
 
         <TextView
             android:id="@+id/horario3"
@@ -121,7 +121,7 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:elevation="5dp"
-            android:text="-" />
+            android:text="@string/hora_cadastro" />
 
     </LinearLayout>
 
@@ -141,7 +141,7 @@
             android:background="@color/background_color"
             android:gravity="center"
             android:elevation="5dp"
-            android:text="-"
+            android:text="@string/hora_cadastro"
             android:textColor="@color/black" />
 
         <TextView
@@ -154,7 +154,7 @@
             android:background="@color/background_color"
             android:gravity="center"
             android:elevation="5dp"
-            android:text="-"
+            android:text="@string/hora_cadastro"
             android:textColor="@color/black" />
 
         <TextView
@@ -167,7 +167,7 @@
             android:background="@color/background_color"
             android:gravity="center"
             android:elevation="5dp"
-            android:text="-"
+            android:text="@string/hora_cadastro"
             android:textColor="@color/black" />
 
     </LinearLayout>
@@ -181,7 +181,7 @@
         android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:text="Agendar alarmes" />
+        android:text="@string/agenda_cadastro" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -195,7 +195,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="12dp"
             android:layout_weight="1"
-            android:text="Data final"
+            android:text="@string/data_cadastro"
             android:textColor="@color/black"
             android:textSize="16dp"
             android:textStyle="bold" />
@@ -228,7 +228,7 @@
             android:layout_marginRight="24dp"
             android:layout_weight="1"
             android:background="@drawable/shape_button_cancelar"
-            android:text="Cancelar"
+            android:text="@string/bt_cancelar"
             android:textColor="@color/white"
             android:textSize="16dp" />
 
@@ -241,7 +241,7 @@
             android:layout_marginRight="32dp"
             android:layout_weight="1"
             android:background="@drawable/shape_button_salvar"
-            android:text="Salvar"
+            android:text="@string/bt_salvar"
             android:textColor="@color/white"
             android:textSize="16dp" />
     </LinearLayout>
