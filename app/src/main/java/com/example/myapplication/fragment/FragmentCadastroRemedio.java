@@ -1,7 +1,12 @@
 package com.example.myapplication.fragment;
 
+import static android.content.Context.ALARM_SERVICE;
+
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,8 +24,8 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.myapplication.DAO.ControllerAlarme;
 import com.example.myapplication.R;
+import com.example.myapplication.brodcast.AlarmerReceiver;
 import com.example.myapplication.databinding.FragmentCadastroRemedioBinding;
 import com.example.myapplication.model.Alarme;
 
@@ -32,6 +37,7 @@ import java.util.Locale;
 public class FragmentCadastroRemedio extends Fragment {
 
     Alarme alarme;
+    Calendar horaEscolhida = Calendar.getInstance();
     FragmentCadastroRemedioBinding binding;
     String horario = "";
     int frequancia, horaAtual, minutoAtal;
@@ -46,7 +52,6 @@ public class FragmentCadastroRemedio extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         btCancelar();
         btSalvar();
         horaAlarme();
@@ -87,8 +92,9 @@ public class FragmentCadastroRemedio extends Fragment {
                     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minuteOfDay) {
                         Calendar c = Calendar.getInstance();
                         c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minuteOfDay);
-                        binding.horaRemedio.setText(String.format(Locale.getDefault(),"%02d:%02d",hourOfDay,minuteOfDay));
+                        c.set(Calendar.MINUTE, minuteOfDay);
+                        horaEscolhida = c;
+                        binding.horaRemedio.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minuteOfDay));
                         horaAtual = hourOfDay;
                         minutoAtal = minuteOfDay;
                         horario = binding.horaRemedio.getText().toString();
@@ -234,23 +240,34 @@ public class FragmentCadastroRemedio extends Fragment {
         binding.btSalva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pegarDados();
+                criarAlarme();
                 voltarParaHome();
             }
         });
     }
 
-    public void pegarDados() {
-        Alarme alarme = new Alarme();
-        ControllerAlarme crud = new ControllerAlarme(getActivity());
-        alarme.setNomeMedicamento(binding.nomeMedicamento.getText().toString());
-        alarme.setDataFinal(binding.dataFinal.getText().toString());
-        alarme.setHorarioSelecionado(binding.horaRemedio.getText().toString());
-        alarme.setFrequancia(frequancia);
-//        String resultado;
-//        resultado = crud.salvar(alarme);
-//        Toast.makeText(getActivity(),resultado,Toast.LENGTH_SHORT).show();
-        crud.salvar(alarme);
+    private void criarAlarme() {
+        switch (frequancia) {
+            case 1:
+
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(ALARM_SERVICE);
+                Intent intent = new Intent(getActivity(), AlarmerReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), 100, intent, PendingIntent.FLAG_MUTABLE);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, horaEscolhida.getTimeInMillis(), pendingIntent);
+                break;
+            case 0:
+                break;
+        }
 
     }
 

@@ -6,7 +6,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -30,25 +33,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        criarNotification();
         chamarFragment();
 
-//        recyclerView = findViewById(R.id.recycle);
-//        lista = new ArrayList<Alarme>();
-//        lista.add(new Alarme("Dipirona","14/11/2022","10 20 01"));
-//        lista.add(new Alarme("Anti-Alergico","17/11/2022","10 20 01"));
-//        adapter = new RecyclerViewAdapter(MainActivity.this,lista);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this,
-//                LinearLayoutManager.VERTICAL, false);
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(adapter);
+
     }
 
 
-    public void chamarFragment(){
+    public void chamarFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout,new FragmentListaAlarmes());
+        fragmentTransaction.replace(R.id.frameLayout, new FragmentListaAlarmes());
         fragmentTransaction.commit();
+    }
+
+    private void criarNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence nome = "CanalDeLembrete";
+            String descricao = "DescrevendoLembrete";
+            int importancia = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel canal = new NotificationChannel("meus_medicamentos", nome, importancia);
+            canal.setDescription(descricao);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(canal);
+        }
     }
 }

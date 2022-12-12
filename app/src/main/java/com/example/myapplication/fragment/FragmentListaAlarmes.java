@@ -1,6 +1,7 @@
 package com.example.myapplication.fragment;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,10 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import com.example.myapplication.DAO.BancoAlarme;
-import com.example.myapplication.DAO.ControllerAlarme;
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentListaAlarmesBinding;
 import com.example.myapplication.model.Alarme;
@@ -29,10 +29,7 @@ import java.util.ArrayList;
 public class FragmentListaAlarmes extends Fragment {
 
     FragmentListaAlarmesBinding binding;
-    RecyclerView recyclerView;
-    ControllerAlarme banco;
-    RecyclerViewAdapter adapter;
-    ArrayList<Alarme> lista;
+    //RecyclerViewAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,16 +41,11 @@ public class FragmentListaAlarmes extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Cursor cursor = banco.listarDados();
-        String[] nomesDosCampos = new String[]{BancoAlarme.getID(), BancoAlarme.getNomeMed(), BancoAlarme.getHora(), BancoAlarme.getData()};
-        int[] idViews = new int[]{R.id.idRecycleView, R.id.recycleView_nome, R.id.recycleView_data, R.id.recycleView_hora};
-
-        banco = new ControllerAlarme(getActivity());
-        lista = new ArrayList<Alarme>();
-        adapter = new RecyclerViewAdapter(getActivity(), lista);
-        binding.recycle.setAdapter(adapter);
-        binding.recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
-        displayData();
+//        lista = new ArrayList<Alarme>();
+//        adapter = new RecyclerViewAdapter(getActivity(), banco.list());
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+//        binding.recycle.setLayoutManager(layoutManager);
+//        binding.recycle.setAdapter(adapter);
         chamarTelaCadastro();
 //        recyclerView = binding.recycle;
 //        lista = new ArrayList<Alarme>();
@@ -66,10 +58,6 @@ public class FragmentListaAlarmes extends Fragment {
 //        recyclerView.setAdapter(adapter);
     }
 
-    private void displayData() {
-
-
-    }
 
     @Override
     public void onDestroy() {
@@ -84,10 +72,12 @@ public class FragmentListaAlarmes extends Fragment {
                 FragmentManager fragmentManager = getParentFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setReorderingAllowed(true);
-                fragmentTransaction.replace(R.id.frameLayout,new FragmentCadastroRemedio());
+                fragmentTransaction.replace(R.id.frameLayout, new FragmentCadastroRemedio());
                 fragmentTransaction.commit();
 
             }
         });
     }
+
 }
+
