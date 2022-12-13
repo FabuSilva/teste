@@ -1,7 +1,7 @@
 package com.example.myapplication.model;
 
 public class Alarme {
-    private Integer id;
+    private String id;
     private String nomeMedicamento;
     private String dataFinal;
     private String horarioSelecionado;
@@ -11,11 +11,10 @@ public class Alarme {
 
     }
 
-    public Alarme(String nome, String data, String horarioSelecionado, int frequancia) {
+    public Alarme(String nome, String data, String horarioSelecionado) {
         this.nomeMedicamento = nome;
         this.dataFinal = data;
         this.horarioSelecionado = horarioSelecionado;
-        frequancia = frequancia;
     }
 
     public String getNomeMedicamento() {
@@ -50,11 +49,11 @@ public class Alarme {
         this.frequancia = frequancia;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 }
