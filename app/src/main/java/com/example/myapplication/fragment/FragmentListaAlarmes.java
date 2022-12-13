@@ -1,7 +1,6 @@
 package com.example.myapplication.fragment;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,13 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
+
 
 import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentListaAlarmesBinding;
+import com.example.myapplication.firebase.Banco;
 import com.example.myapplication.model.Alarme;
+import com.example.myapplication.recyclerView.MyAdapter;
 import com.example.myapplication.recyclerView.RecyclerViewAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -29,7 +34,12 @@ import java.util.ArrayList;
 public class FragmentListaAlarmes extends Fragment {
 
     FragmentListaAlarmesBinding binding;
-    //RecyclerViewAdapter adapter;
+    ArrayList<Alarme> listados;
+    RecyclerViewAdapter adapter;
+    Banco banco;
+    FirebaseDatabase database;
+    DatabaseReference reference;
+    MyAdapter myAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,8 +51,30 @@ public class FragmentListaAlarmes extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        lista = new ArrayList<Alarme>();
-//        adapter = new RecyclerViewAdapter(getActivity(), banco.list());
+        banco = new Banco();
+
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("Alarmes");
+        binding.recycle.setHasFixedSize(true);
+        binding.recycle.setLayoutManager(new LinearLayoutManager(getActivity()));
+        listados = new ArrayList<Alarme>();
+        myAdapter = new MyAdapter(getActivity(), listados);
+        binding.recycle.setAdapter(myAdapter);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Alarme a = dataSnapshot.getValue(Alarme.class);
+                    listados.add(a);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+//        adapter = new RecyclerViewAdapter(getActivity(), banco.listar());
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
 //        binding.recycle.setLayoutManager(layoutManager);
 //        binding.recycle.setAdapter(adapter);
@@ -51,11 +83,11 @@ public class FragmentListaAlarmes extends Fragment {
 //        lista = new ArrayList<Alarme>();
 //        lista.add(new Alarme("Dipirona","14/11/2022","10 20 01"));
 //        lista.add(new Alarme("Anti-Alergico","17/11/2022","10 20 01"));
-//        adapter = new RecyclerViewAdapter(getActivity(),lista);
+//        adapter = new RecyclerViewAdapter(getActivity(), banco.listar());
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(),
 //                LinearLayoutManager.VERTICAL, false);
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(adapter);
+//        binding.recycle.setLayoutManager(layoutManager);
+//        binding.recycle.setAdapter(adapter);
     }
 
 

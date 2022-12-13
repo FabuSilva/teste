@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.brodcast.AlarmerReceiver;
 import com.example.myapplication.databinding.FragmentCadastroRemedioBinding;
+import com.example.myapplication.firebase.Banco;
 import com.example.myapplication.model.Alarme;
 
 import java.text.SimpleDateFormat;
@@ -242,8 +243,20 @@ public class FragmentCadastroRemedio extends Fragment {
             public void onClick(View view) {
                 criarAlarme();
                 voltarParaHome();
+                salvarNoBanco();
             }
         });
+    }
+
+    private void salvarNoBanco() {
+        Alarme a = new Alarme();
+        Banco banco = new Banco();
+        a.setNomeMedicamento(binding.nomeMedicamento.getText().toString());
+        a.setDataFinal(binding.dataFinal.getText().toString());
+        a.setFrequancia(frequancia);
+        a.setHorarioSelecionado(binding.horaRemedio.getText().toString());
+        banco.salvar(a);
+
     }
 
     private void criarAlarme() {
